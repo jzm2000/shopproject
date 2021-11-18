@@ -7,8 +7,13 @@
 
 <script>
 import FooterGuide from "./components/FooterGuide.vue";
+// import { reqFoodCategorys } from "./api";
+
 export default {
-	name: "App",
+	mounted() {
+		this.$store.dispatch("getAddress");
+		this.$store.dispatch("getUserInfo")
+	},
 	components: {
 		FooterGuide,
 	},
