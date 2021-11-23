@@ -11,7 +11,6 @@ import router from './router'
 import './mock/mockServe' //加载mockServer即可
 //注册全局组件标签
 Vue.component(Button.name, Button) //<mt-button>
-
 Vue['config']['productionTip'] = false
 
 new Vue({

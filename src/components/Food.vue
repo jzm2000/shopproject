@@ -2,43 +2,50 @@
 	<div class="food" v-show="isShow">
 		<div class="food-content">
 			<div class="image-header">
-				<img
-					src="http://fuss10.elemecdn.com/8/a6/453f65f16b1391942af11511b7a90jpeg.jpeg?imageVi ew2/1/w/750/h/750"
-				/>
+				<transition name="v">
+					<img :src="food.image" v-show="isShow" />
+				</transition>
 				<p class="foodpanel-desc">主、辅料:水、大米、南瓜、冰糖等</p>
 				<div class="back" @click="toggleShow">
 					<i class="iconfont icon-arrow_left"></i>
 				</div>
 			</div>
 			<div class="content">
-				<h1 class="title">南瓜粥</h1>
+				<h1 class="title">{{ food.name }}</h1>
 				<div class="detail">
-					<span class="sell-count">月售 91 份</span>
-					<span class="rating">好评率 100%</span>
+					<span class="sell-count">月售 {{ food.sellCount }} 份</span>
+					<span class="rating">好评率{{ food.rating }}%</span>
 				</div>
 				<div class="price">
-					<span class="now">￥9</span>
-					<span class="old" style="display: none">￥</span>
+					<span class="now">￥{{ food.price }}</span>
+					<span class="old" v-show="food.oldPrice">￥{{ food.oldPrice }}</span>
 				</div>
-				<div class="cartcontrol-wrapper">cartcontrol 组件</div>
+				<div class="cartcontrol-wrapper">
+					<CartControl :food="food" />
+				</div>
 			</div>
 		</div>
 		<div class="food-cover" @click="toggleShow"></div>
 	</div>
 </template>
 <script>
+import CartControl from './CartControl'
 export default {
 	name: 'Food',
+	props: ['food'],
+	components: {
+		CartControl
+	},
 	data() {
 		return {
-			isShow: false
+			isShow: false,
 		}
 	},
 	methods: {
 		toggleShow() {
 			this.isShow=!this.isShow
 		}
-	}
+	},
 }
 </script>
 <style lang="less" scoped>
@@ -77,6 +84,14 @@ export default {
 				left: 10px;
 				top: 10px;
 				color: #fff;
+			}
+			.v-enter-active,
+			.v-leave-active {
+				transition: all 0.5s;
+			}
+			.v-enter,
+			.v-leave-to {
+				opacity: 0;
 			}
 			img {
 				height: 100%;
@@ -117,6 +132,16 @@ export default {
 				position: absolute;
 				left: 20px;
 				bottom: 9px;
+				.now {
+					color: #fd3f31;
+					font-size: 18px;
+				}
+				.old {
+					font-size: 14px;
+					color: #9b9b9b;
+					text-decoration: line-through;
+					margin-left: 8px;
+				}
 			}
 
 			.cartcontrol-wrapper {

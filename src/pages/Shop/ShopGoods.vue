@@ -32,7 +32,7 @@
 								:key="index"
 								@click="showFoodInfo(food)"
 							>
-								<div class="icon" @click="showImg">
+								<div class="icon">
 									<img width="57" height="57" :src="food.icon" />
 								</div>
 								<div class="content">
@@ -60,6 +60,7 @@
 					</li>
 				</ul>
 			</div>
+			<ShopCart />
 		</div>
 		<Food :food="food" v-show="isShow" ref="child" />
 	</div>
@@ -69,11 +70,13 @@ import { mapState } from 'vuex'
 import CartControl from '../../components/CartControl'
 import BScroll from 'better-scroll'
 import Food from '../../components/Food'
+import ShopCart from '../../components/ShopCart'
 export default {
 	name: 'ShopGoods',
 	components: {
 		CartControl,
-		Food
+		Food,
+		ShopCart
 	},
 	mounted() {
 		this.$store.dispatch('getShopGoods')
@@ -158,11 +161,10 @@ export default {
 		showFoodInfo(food) {
 			// 更新food
 			this.food=food
+			this.$refs.child.toggleShow();
 			// 显示food组件（调用子组件对象方法）
 		},
-		showImg() {
-			this.$refs.child.toggleShow();
-		}
+
 	}
 }
 </script>

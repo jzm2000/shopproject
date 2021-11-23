@@ -14,4 +14,5 @@ export default {
   goods: [],
   ratings: [],
   info: {},
+  cartFoods: [] //购物车中的食物的列表
 }
